@@ -8,6 +8,7 @@ services:
       POSTGRES_USER: ${POSTGRES_USER:-app}
     volumes:
       - voronka_db_data:/var/lib/postgresql/data:rw
+      - ./init_db:/docker-entrypoint-initdb.d
     ports:
       - "50076:5432"
 

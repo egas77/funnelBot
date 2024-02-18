@@ -33,6 +33,8 @@ async def main():
                         message_text = message.text.lower()
                         if new_last_message_id is None:
                             new_last_message_id = message.id
+                        if last_message_id >= message.id:
+                            break
                         if 'прекрасно' in message_text or 'ожидать' in message_text:
                             logger.info(f'Manually cancel for user {user}')
                             await user.cancel_user()
@@ -41,8 +43,6 @@ async def main():
                         if 'триггер1' in message_text:
                             if await funnel.get_level() == 2:
                                 await funnel.trigger1()
-                        if last_message_id <= message.id:
-                            break
                 except (UserBlocked, UserDeactivated, UserDeactivatedBan, InputUserDeactivated):
                     logger.info(f'Block user {user}')
                     await user.block_user()
@@ -59,7 +59,8 @@ async def main():
                     level = msg.get('level')
                     if send_time <= datetime.datetime.utcnow():
                         try:
-                            await app.send_message(user_id, text)
+                            result = await app.send_message(user_id, text)
+                            print(result)
                             await funnel.cancel_level(level)
                             if level == 3:
                                 await user.cancel_user()

@@ -64,8 +64,7 @@ async def main():
                             await funnel.cancel_level(level)
                             if level == 3:
                                 await user.cancel_user()
-                        except (
-                                UserBlocked, UserDeactivated, UserDeactivatedBan,
+                        except (UserBlocked, UserDeactivated, UserDeactivatedBan,
                                 InputUserDeactivated):
                             logger.info(f'Block user {user}')
                             await user.block_user()

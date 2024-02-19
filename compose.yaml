@@ -14,3 +14,4 @@ services:
 
 volumes:
   voronka_db_data:
+  voronka_bot_data:
